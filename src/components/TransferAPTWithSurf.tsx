@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useWalletClient } from "@thalalabs/surf/hooks";
 // Internal components
 import { toast } from "@/components/ui/use-toast";
 import { aptosClient } from "@/utils/aptosClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getAccountAPTBalance } from "@/view-functions/getAccountBalance";
-import { COIN_ABI } from "@/utils/coin_abi";
 
 export function TransferAPT() {
-  const { account } = useWallet();
-  const { client } = useWalletClient();
+  const { account, signAndSubmitTransaction } = useWallet();
 
   const queryClient = useQueryClient();
 
@@ -31,7 +28,9 @@ export function TransferAPT() {
           console.error("Account not available");
         }
 
-        const balance = await getAccountAPTBalance({ accountAddress: account!.address.toStringLong() });
+        const balance = await getAccountAPTBalance({
+          accountAddress: account!.address.toStringLong(),
+        });
 
         return {
           balance,
@@ -50,15 +49,20 @@ export function TransferAPT() {
   });
 
   const onClickButton = async () => {
-    if (!client || !recipient || !transferAmount) {
+    if (!account || !recipient || !transferAmount) {
       return;
     }
 
     try {
-      const committedTransaction = await client.useABI(COIN_ABI).transfer({
-        type_arguments: ["0x1::aptos_coin::AptosCoin"],
-        arguments: [recipient as `0x${string}`, Math.pow(10, 8) * transferAmount],
-      });
+      const transaction = {
+        data: {
+          function: "0x1::coin::transfer",
+          typeArguments: ["0x1::aptos_coin::AptosCoin"],
+          functionArguments: [recipient, Math.pow(10, 8) * transferAmount],
+        } as any,
+      };
+
+      const committedTransaction = await signAndSubmitTransaction(transaction);
       const executedTransaction = await aptosClient().waitForTransaction({
         transactionHash: committedTransaction.hash,
       });
@@ -82,12 +86,29 @@ export function TransferAPT() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h4 className="text-lg font-medium">APT balance: {aptBalance / Math.pow(10, 8)}</h4>
-      Recipient <Input disabled={!account} placeholder="0x1" onChange={(e) => setRecipient(e.target.value)} />
+      <h4 className="text-lg font-medium">
+        APT balance: {aptBalance / Math.pow(10, 8)}
+      </h4>
+      Recipient{" "}
+      <Input
+        disabled={!account}
+        placeholder="0x1"
+        onChange={(e) => setRecipient(e.target.value)}
+      />
       Amount{" "}
-      <Input disabled={!account} placeholder="100" onChange={(e) => setTransferAmount(parseFloat(e.target.value))} />
+      <Input
+        disabled={!account}
+        placeholder="100"
+        onChange={(e) => setTransferAmount(parseFloat(e.target.value))}
+      />
       <Button
-        disabled={!account || !recipient || !transferAmount || transferAmount > aptBalance || transferAmount <= 0}
+        disabled={
+          !account ||
+          !recipient ||
+          !transferAmount ||
+          transferAmount > aptBalance ||
+          transferAmount <= 0
+        }
         onClick={onClickButton}
       >
         Transfer

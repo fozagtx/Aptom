@@ -15,14 +15,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="antialiased">
         <WalletProvider>
           <ReactQueryProvider>
             <div id="root">{children}</div>

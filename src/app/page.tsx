@@ -15,12 +15,12 @@ function App() {
   const { connected } = useWallet();
 
   return (
-    <>
-    <TopBanner />
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <TopBanner />
       <Header />
-      <div className="flex items-center justify-center flex-col">
+      <div className="flex items-center justify-center flex-col py-8 px-4">
         {connected ? (
-          <Card>
+          <Card className="w-full max-w-2xl shadow-lg">
             <CardContent className="flex flex-col gap-10 pt-6">
               <WalletDetails />
               <NetworkInfo />
@@ -30,12 +30,19 @@ function App() {
             </CardContent>
           </Card>
         ) : (
-          <CardHeader>
-            <CardTitle>To get started Connect a wallet</CardTitle>
-          </CardHeader>
+          <div className="text-center bg-white rounded-lg shadow-lg p-8 max-w-md">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-gray-800 mb-4">
+                Welcome to Aptos Boilerplate
+              </CardTitle>
+              <p className="text-gray-600 mb-6">
+                To get started, please connect your wallet
+              </p>
+            </CardHeader>
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
