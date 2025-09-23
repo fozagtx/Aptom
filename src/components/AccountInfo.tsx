@@ -11,12 +11,20 @@ export function AccountInfo() {
         items={[
           {
             label: "Address",
-            value: <DisplayValue value={account?.address .toStringLong()?? "Not Present"} isCorrect={!!account?.address} />,
+            value: (
+              <DisplayValue
+                value={account?.address.toString() ?? "Not Present"}
+                isCorrect={!!account?.address}
+              />
+            ),
           },
           {
             label: "Public key",
             value: (
-              <DisplayValue value={account?.publicKey.toString() ?? "Not Present"} isCorrect={!!account?.publicKey} />
+              <DisplayValue
+                value={account?.publicKey.toString() ?? "Not Present"}
+                isCorrect={!!account?.publicKey}
+              />
             ),
           },
           {

@@ -1,13 +1,15 @@
-import withPWAInit from "@ducanh2912/next-pwa";
+// Disable PWA for development to avoid conflicts
+export default {
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+  outputFileTracingRoot: process.cwd(),
 
-const withPWA = withPWAInit({
-  disable: process.env.NODE_ENV === "development",
-});
-
-// Your Next config is automatically typed!
-export default withPWA({
-  // Remove static export for development
-  // output: "export", // Only use for production builds
-  // distDir: "./dist", // Only use for production builds
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH, // Sets the base path to `/some-base-path`.
-});
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
+    return config;
+  },
+};

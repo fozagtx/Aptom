@@ -6,8 +6,8 @@ import { toast } from "@/components/ui/use-toast";
 import { aptosClient } from "@/utils/aptosClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getAccountAPTBalance } from "@/view-functions/getAccountBalance";
-import { transferAPT } from "@/entry-functions/transferAPT";
+import { getAccountAPTBalance } from "@/view/getAccountBalance";
+import { transferAPT } from "@/entry/transferAPT";
 
 export function TransferAPT() {
   const { account, signAndSubmitTransaction } = useWallet();
@@ -26,7 +26,9 @@ export function TransferAPT() {
           console.error("Account not available");
         }
 
-        const balance = await getAccountAPTBalance({ accountAddress: account!.address.toStringLong() });
+        const balance = await getAccountAPTBalance({
+          accountAddress: account!.address.toString(),
+        });
 
         return {
           balance,
@@ -80,12 +82,29 @@ export function TransferAPT() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h4 className="text-lg font-medium">APT balance: {aptBalance / Math.pow(10, 8)}</h4>
-      Recipient <Input disabled={!account} placeholder="0x1" onChange={(e) => setRecipient(e.target.value)} />
+      <h4 className="text-lg font-medium">
+        APT balance: {aptBalance / Math.pow(10, 8)}
+      </h4>
+      Recipient{" "}
+      <Input
+        disabled={!account}
+        placeholder="0x1"
+        onChange={(e) => setRecipient(e.target.value)}
+      />
       Amount{" "}
-      <Input disabled={!account} placeholder="100" onChange={(e) => setTransferAmount(parseFloat(e.target.value))} />
+      <Input
+        disabled={!account}
+        placeholder="100"
+        onChange={(e) => setTransferAmount(parseFloat(e.target.value))}
+      />
       <Button
-        disabled={!account || !recipient || !transferAmount || transferAmount > aptBalance || transferAmount <= 0}
+        disabled={
+          !account ||
+          !recipient ||
+          !transferAmount ||
+          transferAmount > aptBalance ||
+          transferAmount <= 0
+        }
         onClick={onClickButton}
       >
         Transfer

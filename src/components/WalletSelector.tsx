@@ -8,6 +8,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -51,9 +52,9 @@ export function WalletSelector() {
   const closeDialog = useCallback(() => setIsDialogOpen(false), []);
 
   const copyAddress = useCallback(async () => {
-    if (!account?.address.toStringLong()) return;
+    if (!account?.address.toString()) return;
     try {
-      await navigator.clipboard.writeText(account.address.toStringLong());
+      await navigator.clipboard.writeText(account.address.toString());
       toast({
         title: "Success",
         description: "Copied wallet address to clipboard.",
@@ -71,7 +72,9 @@ export function WalletSelector() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button>
-          {account?.ansName || truncateAddress(account?.address.toStringLong()) || "Unknown"}
+          {account?.ansName ||
+            truncateAddress(account?.address.toString()) ||
+            "Unknown"}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -111,7 +114,8 @@ interface ConnectWalletDialogProps {
 
 function ConnectWalletDialog({ close }: ConnectWalletDialogProps) {
   const { wallets = [], notDetectedWallets = [] } = useWallet();
-  const { aptosConnectWallets, availableWallets, installableWallets } = groupAndSortWallets([...wallets, ...notDetectedWallets]);
+  const { aptosConnectWallets, availableWallets, installableWallets } =
+    groupAndSortWallets([...wallets, ...notDetectedWallets]);
 
   const hasAptosConnectWallets = !!aptosConnectWallets.length;
 
@@ -129,6 +133,11 @@ function ConnectWalletDialog({ close }: ConnectWalletDialogProps) {
               "Connect Wallet"
             )}
           </DialogTitle>
+          <DialogDescription className="text-center text-sm text-muted-foreground">
+            {hasAptosConnectWallets
+              ? "Choose a wallet to connect to the Digital Marketplace"
+              : "Select a wallet to connect and start using the marketplace"}
+          </DialogDescription>
         </DialogHeader>
 
         {hasAptosConnectWallets && (

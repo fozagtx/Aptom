@@ -8,7 +8,7 @@ import { toast } from "@/components/ui/use-toast";
 import { aptosClient } from "@/utils/aptosClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getAccountAPTBalance } from "@/view-functions/getAccountBalance";
+import { getAccountAPTBalance } from "@/view/getAccountBalance";
 
 export function TransferAPT() {
   const { account, signAndSubmitTransaction } = useWallet();
@@ -29,7 +29,7 @@ export function TransferAPT() {
         }
 
         const balance = await getAccountAPTBalance({
-          accountAddress: account!.address.toStringLong(),
+          accountAddress: account!.address.toString(),
         });
 
         return {
