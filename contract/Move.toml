@@ -1,10 +1,13 @@
 [package]
-name = "MessageBoard"
+name = "DigitalMarketplace"
 version = "1.0.0"
 authors = []
 
 [addresses]
-message_board_addr = "_"
+marketplace_addr = "_"
+
+[dev-addresses]
+marketplace_addr = "0xc3aa4e378154923fb36e09f83ccdf7db26c028f8f24760036a07c04cd6cacb76"
 
 [dependencies]
 AptosFramework = { git = "https://github.com/aptos-labs/aptos-framework.git", rev = "mainnet", subdir = "aptos-framework" }
