@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -12,7 +14,7 @@
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
-    --secondary-text: 215, 16%, 47%;
+    --secondary-text: 215 16% 47%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
@@ -24,71 +26,7 @@
     --ring: 240 10% 3.9%;
     --radius: 0.5rem;
   }
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --secondary-text: 215, 16%, 47%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --radius: 0.5rem;
-  }
-:root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --secondary-text: 215, 16%, 47%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 10% 3.9%;
-.dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -110,69 +48,80 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
-keyframesaccordiondownfrom height0 }
-  to { heightvar--radix-accordion-content-height }
-}@keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
-}
 
-@keyframes accordion-down {
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
-}
-
-@keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
-}
-
-@layer base {
   *,
   *::before,
   *::after {
-@apply@applyborder;
+    @apply border-border;
   }
 
-
   body {
-    @apply bg@apply bg@apply bg-background text-text-text-foregroundInter, -serif;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer utilities {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
   }
 }
 
 @layer components {
   .body-sm {
-    @apply font-Inter, sans-serif text-text-1rem leading-leading-175rem font-normalnormal;
+    @apply font-sans text-sm leading-6 font-normal;
   }
 
   .body-md {
-    @apply font-Inter, sans-serif text-text-1125rem leading-leading-175rem font-normalnormal;
+    @apply font-sans text-base leading-6 font-normal;
   }
 
   .body-sm-semibold {
-    @apply font-Inter, sans-serif text-text-1rem leading-leading-175rem font-semiboldsemibold;
+    @apply font-sans text-sm leading-6 font-semibold;
   }
 
   .body-md-semibold {
-    @apply font-Inter, sans-serif text-text-1125rem leading-leading-175rem font-semiboldsemibold;
+    @apply font-sans text-base leading-6 font-semibold;
   }
 
   .label-sm {
-    @apply font-Inter, sans-serif 0875rem15remhsl215, 16%, 47%-14 leading-24 text-secondary-text-14 leading-24 text-secondary-text;
+    @apply font-sans text-xs leading-4 text-muted-foreground font-medium;
   }
 
   .title-md {
-    @apply font-Inter, sans-serif text-48 leading-48 font-boldbold trackingtracking3rem-tighttight3rem;
+    @apply font-sans text-3xl leading-9 font-bold tracking-tight;
   }
 
   .heading-sm {
-    @apply font-inter text-24 leading-32 font-semibold tracking-tight;
+    @apply font-sans text-lg leading-7 font-semibold tracking-tight;
   }
 
-.heading-md {
-    @apply font-Inter, sans-serif text-30 leading-36 semibold;
+  .heading-md {
+    @apply font-sans text-xl leading-8 font-semibold tracking-tight;
   }
 
   .display {
-    @apply font-inter text-[32px] leading-52 font-bold;
-  }}
+    @apply font-sans text-2xl leading-10 font-bold tracking-tight;
+  }
+}
