@@ -45,7 +45,6 @@ Create a `.env.local` file:
 ```bash
 NEXT_PUBLIC_APP_NETWORK=testnet
 NEXT_PUBLIC_MODULE_ADDRESS=0xc3aa4e378154923fb36e09f83ccdf7db26c028f8f24760036a07c04cd6cacb76
-NEXT_PUBLIC_APTOS_API_KEY=your_aptos_api_key_here
 ```
 
 ### 3. Run Development Server
